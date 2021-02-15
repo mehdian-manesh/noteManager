@@ -21,8 +21,14 @@ class NoteFactory extends Factory
      */
     public function definition()
     {
+        $user_ids = \App\Models\User::pluck('id')->toArray();
+        $category_ids = \App\Models\Category::pluck('id')->toArray();
+        $category_ids[] = null;
         return [
-            //
+            'title' => $this->faker->sentence,
+            'body'  => $this->faker->paragraph,
+            'user_id' => $this->faker->randomElement($user_ids),
+            'category_id' => $this->faker->randomElement($category_ids),
         ];
     }
 }
