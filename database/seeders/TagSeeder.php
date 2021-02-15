@@ -13,6 +13,10 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $tags = \App\Models\Tag::factory(10)->create();
+
+        \App\Models\User::All()->each(function ($user) use ($tags){
+            $user->tags()->saveMany($tags);
+        });
     }
 }

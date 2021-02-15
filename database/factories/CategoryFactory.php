@@ -21,8 +21,10 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $user_ids = \App\Models\User::pluck('id')->toArray();
         return [
-            //
+            'name' => $this->faker->words(3),
+            'user_id' => $this->faker->randomElement($user_ids),
         ];
     }
 }
