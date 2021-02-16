@@ -23,7 +23,7 @@ class CategoryFactory extends Factory
     {
         $user_ids = \App\Models\User::pluck('id')->toArray();
         return [
-            'name' => $this->faker->words(3),
+            'name' => $this->faker->word,
             'user_id' => $this->faker->randomElement($user_ids),
         ];
     }

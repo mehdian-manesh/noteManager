@@ -15,8 +15,8 @@ class TagSeeder extends Seeder
     {
         $tags = \App\Models\Tag::factory(10)->create();
 
-        \App\Models\User::All()->each(function ($user) use ($tags){
-            $user->tags()->saveMany($tags);
+        \App\Models\Note::All()->each(function ($note) use ($tags){
+            $note->tags()->saveMany($tags);
         });
     }
 }

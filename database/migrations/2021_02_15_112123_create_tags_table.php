@@ -15,12 +15,13 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });
 
-        Schema::create('tag_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        Schema::create('note_tag', function (Blueprint $table) {
+            $table->foreignId('note_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
