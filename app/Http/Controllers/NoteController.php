@@ -8,39 +8,39 @@ use Illuminate\Http\Request;
 class NoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the notes.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return response()->json(Note::paginate(3), 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created note in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified note.
      *
      * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function show(Note $note)
     {
-        //
+        return response()->json($note, 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified note in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Note  $note
@@ -52,7 +52,7 @@ class NoteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified note from storage.
      *
      * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
