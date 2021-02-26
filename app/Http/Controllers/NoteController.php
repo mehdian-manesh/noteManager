@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreNoteRequest;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
@@ -23,20 +24,26 @@ class NoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreNoteRequest $request)
     {
-        dd($request);
+        // Retrieve the validated input data...
+        $validated = $request->validated();
+
+        if (empty($validated['user_id'])) $validated['user_id'] = auth()->user()->id;
+
+
     }
 
     /**
      * Display the specified note.
      *
-     * @param  \App\Models\Note  $note
+     * @param  $note
      * @return \Illuminate\Http\Response
      */
-    public function show(Note $note)
+    public function show($note)
     {
-        return response()->json($note, 200);
+        $data = Note::with(['category','tags'])->findOrFail($note);
+        return response()->json($data, 200);
     }
 
     /**
