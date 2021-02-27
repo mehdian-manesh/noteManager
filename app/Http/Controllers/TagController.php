@@ -14,7 +14,11 @@ class TagController extends Controller
      */
     public function index()
     {
-        return response()->json(Tag::paginate(5), 200);
+        $user = request()->user();
+        if( !$user->tokenCan('read'))
+        return response()->json(['msg' => 'The user not authorized'], 401);
+
+        return response()->json($user->tags()->paginate(5), 200);
     }
 
     /**
@@ -36,7 +40,12 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        $user = request()->user();
+        if( $tag->user_id !== $user->id  || !$user->tokenCan('read'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $data = Tag::with('notes')->findOrFail($tag->id);
+        return response()->json($data, 200);
     }
 
     /**

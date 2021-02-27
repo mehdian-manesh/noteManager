@@ -16,7 +16,11 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return response()->json(Note::paginate(5), 200);
+        $user = request()->user();
+        if( !$user->tokenCan('read'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        return response()->json($user->notes()->paginate(5), 200);
     }
 
     /**
@@ -46,9 +50,7 @@ class NoteController extends Controller
     {
         $user = request()->user();
         if( $note->user_id !== $user->id  || !$user->tokenCan('read'))
-            return response()->json([
-                'msg' => 'The user not authorized',
-            ], 401);
+            return response()->json(['msg' => 'The user not authorized'], 401);
 
         $data = Note::with(['category','tags'])->findOrFail($note->id);
         return response()->json($data, 200);
@@ -77,9 +79,7 @@ class NoteController extends Controller
     {
         $user = request()->user();
         if( $note->user_id !== $user->id  || !$user->tokenCan('delete'))
-            return response()->json([
-                'msg' => 'The user not authorized',
-            ], 401);
+            return response()->json(['msg' => 'The user not authorized'], 401);
 
         $note->delete();
 

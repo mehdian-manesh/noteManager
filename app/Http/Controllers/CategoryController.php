@@ -14,7 +14,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(Category::paginate(5), 200);
+        $user = request()->user();
+        if( !$user->tokenCan('read'))
+        return response()->json(['msg' => 'The user not authorized'], 401);
+
+        return response()->json($user->categories()->paginate(5), 200);
     }
 
     /**
@@ -34,9 +38,13 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($category)
+    public function show(Category $category)
     {
-        $data = Category::with('notes')->findOrFail($category);
+        $user = request()->user();
+        if( $category->user_id !== $user->id  || !$user->tokenCan('read'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $data = Category::with('notes')->findOrFail($category->id);
         return response()->json($data, 200);
     }
 
