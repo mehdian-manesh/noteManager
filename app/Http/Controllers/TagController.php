@@ -91,6 +91,12 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $user = request()->user();
+        if( $tag->user_id !== $user->id  || !$user->tokenCan('delete'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $tag->delete();
+
+        return response()->json( null, 204);
     }
 }

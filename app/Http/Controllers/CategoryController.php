@@ -90,6 +90,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $user = request()->user();
+        if( $category->user_id !== $user->id  || !$user->tokenCan('delete'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $category->delete();
+
+        return response()->json( null, 204);
+
     }
 }
