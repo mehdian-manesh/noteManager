@@ -16,7 +16,7 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return response()->json(Note::paginate(3), 200);
+        return response()->json(Note::paginate(5), 200);
     }
 
     /**

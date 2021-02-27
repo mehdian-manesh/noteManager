@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the tags.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return response()->json(Tag::paginate(5), 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created tag in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -29,7 +29,7 @@ class TagController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified tag.
      *
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
@@ -40,7 +40,7 @@ class TagController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified tag in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Tag  $tag
@@ -52,7 +52,7 @@ class TagController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified tag from storage.
      *
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
