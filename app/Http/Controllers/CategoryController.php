@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $user = request()->user();
         if( !$user->tokenCan('read'))
-        return response()->json(['msg' => 'The user not authorized'], 401);
+            return response()->json(['msg' => 'The user not authorized'], 401);
 
         return response()->json($user->categories()->paginate(5), 200);
     }
@@ -29,7 +29,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+        if( !$user->tokenCan('create'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $validatedData = $request->validate([
+            'name' => 'required|max:100'
+            ]);
+
+        $validatedData['user_id'] = $user->id;
+
+        $category = Category::create($validatedData);
+
+        return response()->json($category, 201);
     }
 
     /**

@@ -16,7 +16,7 @@ class TagController extends Controller
     {
         $user = request()->user();
         if( !$user->tokenCan('read'))
-        return response()->json(['msg' => 'The user not authorized'], 401);
+            return response()->json(['msg' => 'The user not authorized'], 401);
 
         return response()->json($user->tags()->paginate(5), 200);
     }
@@ -29,7 +29,20 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+        if( !$user->tokenCan('create'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $validatedData = $request->validate([
+            'name' => 'required'
+            ]);
+
+        $validatedData['user_id'] = $user->id;
+
+        $tag = Tag::create($validatedData);
+
+        return response()->json($tag, 201);
+
     }
 
     /**
