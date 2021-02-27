@@ -69,6 +69,13 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        if( $note->user_id !== auth()->user()->id )
+            return response()->json([
+                'msg' => 'The user not authorized',
+            ], 401);
+
+        $note->delete();
+
+        return response()->json( null, 204);
     }
 }
