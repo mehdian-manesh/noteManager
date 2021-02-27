@@ -42,9 +42,15 @@ class NoteController extends Controller
      * @param  $note
      * @return \Illuminate\Http\Response
      */
-    public function show($note)
+    public function show(Note $note)
     {
-        $data = Note::with(['category','tags'])->findOrFail($note);
+        $user = request()->user();
+        if( $note->user_id !== $user->id  || !$user->tokenCan('read'))
+            return response()->json([
+                'msg' => 'The user not authorized',
+            ], 401);
+
+        $data = Note::with(['category','tags'])->findOrFail($note->id);
         return response()->json($data, 200);
     }
 
@@ -69,7 +75,8 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        if( $note->user_id !== auth()->user()->id )
+        $user = request()->user();
+        if( $note->user_id !== $user->id  || !$user->tokenCan('delete'))
             return response()->json([
                 'msg' => 'The user not authorized',
             ], 401);

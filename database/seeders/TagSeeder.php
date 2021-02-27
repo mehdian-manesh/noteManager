@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tag;
+use App\Models\Note;
 use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
@@ -13,9 +15,10 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = \App\Models\Tag::factory(10)->create();
+        $tags = Tag::factory(14)->create();
 
-        \App\Models\Note::All()->each(function ($note) use ($tags){
+        Note::All()->each(function ($note) {
+            $tags = $note->user->tags;
             $note->tags()->saveMany($tags);
         });
     }
