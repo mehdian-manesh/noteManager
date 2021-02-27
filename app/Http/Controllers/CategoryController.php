@@ -69,7 +69,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $user = $request->user();
+        if( !$user->tokenCan('update'))
+            return response()->json(['msg' => 'The user not authorized'], 401);
+
+        $validatedData = $request->validate([
+            'name' => 'required|max:100'
+            ]);
+
+        $category->update($validatedData);
+
+        return response()->json(null, 200);
     }
 
     /**
