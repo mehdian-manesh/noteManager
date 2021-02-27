@@ -31,7 +31,8 @@ class NoteController extends Controller
 
         if (empty($validated['user_id'])) $validated['user_id'] = auth()->user()->id;
 
-
+        $note = Note::create($validated);
+        return response()->json($note, 201);
     }
 
     /**
