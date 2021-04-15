@@ -33,13 +33,12 @@ cp .env.example .env
 ```sh
 ./vendor/bin/sail up -d
 ```
-you can use an alias for `./vendor/bin/sail` to execute Sail's commands more easily. for more information see Laravel Documentation for [alias](https://laravel.com/docs/8.x/sail#configuring-a-bash-alias).
+you can use an alias for `./vendor/bin/sail` to execute Sail's commands more easily. for more information see Laravel Documentation for [sail alias](https://laravel.com/docs/8.x/sail#configuring-a-bash-alias).
 
 - install npm packages:
 ```sh
 ./vendor/bin/sail npm install
 ```
-- make `.env` file based on `.env.example`
 - generate project key:
 ```sh
 ./vendor/bin/sail artisan key:generate
