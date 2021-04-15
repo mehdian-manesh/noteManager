@@ -15,7 +15,7 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = Tag::factory(14)->create();
+        Tag::factory(14)->create();
 
         Note::All()->each(function ($note) {
             $tags = $note->user->tags;
