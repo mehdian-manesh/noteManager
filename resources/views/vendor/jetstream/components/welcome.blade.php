@@ -68,7 +68,10 @@
 
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
-                See the Api of the program
+                See the Api of the program.
+                <a href="https://github.com/mehdian-manesh/noteManager#how-to-use-api-of-the-program">
+                    How to use API of this program
+                </a>.
             </div>
         </div>
     </div>
