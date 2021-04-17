@@ -52,3 +52,35 @@ you can use an alias for `./vendor/bin/sail` to execute Sail's commands more eas
 ```sh
 ./vendor/bin/sail down
 ```
+## How to use API of the program
+
+- first, goto home page (http://localhost) and register into the program.
+- then, in the **dashboard** page, click on upper right icon and go to **API Tokens** page
+- Create a new API Token by setting it's name and it's permissions.
+- after that, a message must be shown to you that contain your API token. copy it and close the message.
+- when you want to use the program api, add following header to your request.
+```http
+Authorization: Bearer <your api token>
+``` 
+## API Routes
+
+The following routes are available in the program's api:
+| Method | URI | Action |
+--- | --- | ---
+| GET\|HEAD | api/user | Closure |
+| GET\|HEAD | api/notes | App\Http\Controllers\NoteController@index |
+| POST | api/notes | App\Http\Controllers\NoteController@store |
+| GET\|HEAD | api/notes/{note} | App\Http\Controllers\NoteController@show |
+| PUT\|PATCH | api/notes/{note} | App\Http\Controllers\NoteController@update |
+| DELETE | api/notes/{note} | App\Http\Controllers\NoteController@destroy |
+| GET\|HEAD | api/categories | App\Http\Controllers\CategoryController@index |
+| POST | api/categories | App\Http\Controllers\CategoryController@store |
+| GET\|HEAD | api/categories/{category} | App\Http\Controllers\CategoryController@show |
+| PUT\|PATCH | api/categories/{category} | App\Http\Controllers\CategoryController@update |
+| DELETE | api/categories/{category} | App\Http\Controllers\CategoryController@destroy |
+| GET\|HEAD | api/tags | App\Http\Controllers\TagController@index |
+| POST | api/tags | App\Http\Controllers\TagController@store |
+| GET\|HEAD | api/tags/{tag} | App\Http\Controllers\TagController@show |
+| PUT\|PATCH | api/tags/{tag} | App\Http\Controllers\TagController@update |
+| DELETE | api/tags/{tag} | App\Http\Controllers\TagController@destroy |
+
